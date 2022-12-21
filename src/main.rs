@@ -1,4 +1,5 @@
 pub mod day1;
+pub mod day2;
 fn main() {
-    println!("{}", day1::calorie_counter())
+    print!("{}", day2::rock_paper_scissors_part_two());
 }
