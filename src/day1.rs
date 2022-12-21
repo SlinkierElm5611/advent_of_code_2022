@@ -34,8 +34,13 @@ pub fn calorie_counter() -> i64 {
         }
     }
     current_elf = 0;
+    let mut current_max = 0;
     for elf in &highest_elves {
         current_elf += elf;
+        if elf > &current_max{
+            current_max = *elf;
+        }
     }
+    println!("{}", current_max);
     return current_elf;
 }
