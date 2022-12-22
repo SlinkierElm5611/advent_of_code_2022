@@ -1,7 +1,4 @@
-use std::fs::File;
-use std::io::Read;
-use std::path::Path;
-use std::collections::HashMap;
+use std::{collections::HashMap, fs::File, io::Read, path::Path};
 
 pub fn rock_paper_scissors_part_one() -> u32 {
     let path = Path::new("day2.txt");
@@ -26,19 +23,19 @@ pub fn rock_paper_scissors_part_one() -> u32 {
     lose.insert("C", "A");
     for game in game_vec {
         let mut moves: Vec<&str> = game.split(" ").collect();
-        if moves[1] == "X"{
+        if moves[1] == "X" {
             moves[1] = "A";
             points += 1;
-        }else if moves[1] == "Y"{
+        } else if moves[1] == "Y" {
             moves[1] = "B";
             points += 2;
-        }else if moves[1] == "Z" {
+        } else if moves[1] == "Z" {
             moves[1] = "C";
             points += 3;
         }
         if win[moves[1]] == moves[0] {
             points += 6;
-        }else if moves[1] == moves[0] {
+        } else if moves[1] == moves[0] {
             points += 3;
         }
     }
@@ -68,23 +65,23 @@ pub fn rock_paper_scissors_part_two() -> u32 {
     lose.insert("B", "C");
     for game in game_vec {
         let mut moves: Vec<&str> = game.split(" ").collect();
-        if moves[1] == "X"{
+        if moves[1] == "X" {
             moves[1] = win[moves[0]];
-        }else if moves[1] == "Y"{
+        } else if moves[1] == "Y" {
             moves[1] = moves[0];
-        }else{
+        } else {
             moves[1] = lose[moves[0]];
         }
-        if moves[1] == "A"{
+        if moves[1] == "A" {
             points += 1;
-        }else if moves[1] == "B"{
+        } else if moves[1] == "B" {
             points += 2;
-        }else if moves[1] == "C" {
+        } else if moves[1] == "C" {
             points += 3;
         }
         if win[moves[1]] == moves[0] {
             points += 6;
-        }else if moves[1] == moves[0] {
+        } else if moves[1] == moves[0] {
             points += 3;
         }
     }

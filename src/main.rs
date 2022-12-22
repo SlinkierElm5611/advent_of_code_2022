@@ -1,5 +1,6 @@
 pub mod day1;
 pub mod day2;
+pub mod day3;
 fn main() {
-    print!("{}", day2::rock_paper_scissors_part_two());
+    println!("{}", day3::rucksack_reorganization_part_two())
 }
