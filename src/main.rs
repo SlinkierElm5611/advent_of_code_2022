@@ -3,7 +3,8 @@ pub mod day2;
 pub mod day3;
 pub mod day4;
 pub mod day5;
+pub mod day6;
 
 fn main() {
-    println!("{}", day5::supply_stacks_part_two());
+    println!("{}", day6::tuning_trouble_part_one());
 }

@@ -1,4 +1,4 @@
-use std::{fs::File, io::Read, path::Path, usize};
+use std::{fs::File, io::Read, path::Path};
 
 pub fn supply_stacks_part_one() -> String {
     let path: &Path = Path::new("day5.txt");
