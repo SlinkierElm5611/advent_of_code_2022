@@ -33,7 +33,7 @@ pub fn camp_cleanup_part_one() -> u32 {
 }
 
 pub fn camp_cleanup_part_two() -> u32 {
-    let path = Path::new("day4.txt");
+    let path: &Path = Path::new("day4.txt");
     let mut file: File = match File::open(&path) {
         Err(_) => panic!("could not open file!"),
         Ok(file) => file,
@@ -55,11 +55,11 @@ pub fn camp_cleanup_part_two() -> u32 {
             .split("-")
             .map(|num| num.parse().unwrap())
             .collect();
-        let range_elf_one: Vec<u32> = (elf_one[0]..elf_one[1]+1).collect();
-        let range_elf_two: Vec<u32> = (elf_two[0]..elf_two[1]+1).collect();
-        for plot in range_elf_one{
-            if range_elf_two.contains(&plot){
-                counter+=1;
+        let range_elf_one: Vec<u32> = (elf_one[0]..elf_one[1] + 1).collect();
+        let range_elf_two: Vec<u32> = (elf_two[0]..elf_two[1] + 1).collect();
+        for plot in range_elf_one {
+            if range_elf_two.contains(&plot) {
+                counter += 1;
                 break;
             }
         }
