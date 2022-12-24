@@ -1,15 +1,14 @@
 use std::io::Read;
 
 #[derive(Debug)]
-struct file {
+struct File {
     size: usize,
-    name: String,
 }
 
 #[derive(Debug)]
 struct Directory {
     name: String,
-    files: Vec<file>,
+    files: Vec<File>,
     sub_dirs: Vec<Box<Directory>>,
     size: usize,
 }
@@ -47,13 +46,12 @@ impl Directory {
                     ))));
                     self.sub_dirs.push(new_dir);
                 } else {
-                    let mut space_index: usize =
+                    let space_index: usize =
                         cmd_output[counter].find(" ").expect("error in line 47");
-                    self.files.push(file {
+                    self.files.push(File {
                         size: cmd_output[counter][..space_index]
                             .parse()
                             .expect("Error parsing on line 48"),
-                        name: String::from(&cmd_output[counter][space_index + 1..]),
                     })
                 }
             }
@@ -62,7 +60,7 @@ impl Directory {
         return counter;
     }
     fn set_size(&mut self) -> usize {
-        if (self.size == 0) {
+        if self.size == 0 {
             let mut working_size: usize = 0;
             for item in &self.files {
                 working_size += item.size;
@@ -77,24 +75,25 @@ impl Directory {
     }
 }
 
-fn sum_of_sizes_below_100000(dir: &Box<Directory>) -> usize{
+fn sum_of_sizes_below_100000(dir: &Box<Directory>) -> usize {
     let mut working_size: usize = 0;
-    if(dir.size <= 100000){
+    if dir.size <= 100000 {
         working_size += dir.size;
     }
-    for item in &dir.sub_dirs{
+    for item in &dir.sub_dirs {
         working_size += sum_of_sizes_below_100000(item);
     }
     return working_size;
 }
 
-fn smallest_dir_to_delete(dir: &Box<Directory>, space_to_be_freed: usize) -> Option<usize>{
+fn smallest_dir_to_delete(dir: &Box<Directory>, space_to_be_freed: usize) -> Option<usize> {
     let mut working_value: usize;
     if dir.size > space_to_be_freed {
         working_value = dir.size;
-        for subDir in &dir.sub_dirs{
-            let temp: usize = smallest_dir_to_delete(&subDir, space_to_be_freed).unwrap_or(usize::MAX);
-            if working_value > temp{
+        for sub_dir in &dir.sub_dirs {
+            let temp: usize =
+                smallest_dir_to_delete(&sub_dir, space_to_be_freed).unwrap_or(usize::MAX);
+            if working_value > temp {
                 working_value = temp;
             }
         }
