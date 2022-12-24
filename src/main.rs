@@ -4,7 +4,8 @@ pub mod day3;
 pub mod day4;
 pub mod day5;
 pub mod day6;
+pub mod day7;
 
 fn main() {
-    println!("{}", day6::tuning_trouble_part_one());
+    println!("{}", day7::file_system_part_two());
 }
