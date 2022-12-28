@@ -7,7 +7,8 @@ pub mod day6;
 pub mod day7;
 pub mod day8;
 pub mod day9;
+pub mod day10;
 
 fn main() {
-    println!("{}", day9::rope_bridge_part_two());
+    println!("{}", day10::cathode_ray_tube_part_two());
 }
