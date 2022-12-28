@@ -6,7 +6,8 @@ pub mod day5;
 pub mod day6;
 pub mod day7;
 pub mod day8;
+pub mod day9;
 
 fn main() {
-    println!("{}", day8::treetop_tree_house_part_two());
+    println!("{}", day9::rope_bridge_part_two());
 }
