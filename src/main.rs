@@ -8,7 +8,8 @@ pub mod day7;
 pub mod day8;
 pub mod day9;
 pub mod day10;
+pub mod day11;
 
 fn main() {
-    println!("{}", day10::cathode_ray_tube_part_two());
+    println!("{}", day11::monkey_in_the_middle_part_two());
 }
