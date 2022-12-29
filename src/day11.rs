@@ -1,7 +1,7 @@
 use std::{fs::File, io::Read, path::Path};
 
 #[derive(Debug)]
-struct monkey {
+struct Monkey {
     items_held: Vec<usize>,
     operation: [String; 3],
     test: usize,
@@ -17,7 +17,7 @@ pub fn monkey_in_the_middle_part_one() -> usize {
     data_file
         .read_to_string(&mut data_string)
         .expect("Error reading file");
-    let mut monkeys: Vec<monkey> = Vec::new();
+    let mut monkeys: Vec<Monkey> = Vec::new();
     let mut lines: Vec<&str> = data_string.split("\n").collect();
     let mut index: usize = 0;
     while lines.contains(&"") {
@@ -28,7 +28,7 @@ pub fn monkey_in_the_middle_part_one() -> usize {
         }
     }
     for i in 0..lines.len() / 6 {
-        let mut chimp: monkey = monkey {
+        let mut chimp: Monkey = Monkey {
             items_held: Vec::new(),
             operation: [String::new(), String::new(), String::new()],
             test: lines[i*6 + 3].split(" ").collect::<Vec<&str>>().pop().expect("Improperly formatted input").parse().expect("Error parsing int"),
@@ -96,7 +96,7 @@ pub fn monkey_in_the_middle_part_two() -> usize {
     data_file
         .read_to_string(&mut data_string)
         .expect("Error reading file");
-    let mut monkeys: Vec<monkey> = Vec::new();
+    let mut monkeys: Vec<Monkey> = Vec::new();
     let mut lines: Vec<&str> = data_string.split("\n").collect();
     let mut index: usize = 0;
     while lines.contains(&"") {
@@ -107,7 +107,7 @@ pub fn monkey_in_the_middle_part_two() -> usize {
         }
     }
     for i in 0..lines.len() / 6 {
-        let mut chimp: monkey = monkey {
+        let mut chimp: Monkey = Monkey {
             items_held: Vec::new(),
             operation: [String::new(), String::new(), String::new()],
             test: lines[i*6 + 3].split(" ").collect::<Vec<&str>>().pop().expect("Improperly formatted input").parse().expect("Error parsing int"),
