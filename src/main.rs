@@ -9,7 +9,8 @@ pub mod day8;
 pub mod day9;
 pub mod day10;
 pub mod day11;
+pub mod day12;
 
 fn main() {
-    println!("{}", day11::monkey_in_the_middle_part_two());
+    println!("{}", day12::hill_climbing_algorithm_part_one());
 }
