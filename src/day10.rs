@@ -34,13 +34,13 @@ pub fn cathode_ray_tube_part_one() -> usize {
     return sum_of_xs as usize;
 }
 
-fn add_to_display(output: &mut String, cycle: isize, x: isize){
-    if (cycle)%40 == 0{
+fn add_to_display(output: &mut String, cycle: isize, x: isize) {
+    if (cycle) % 40 == 0 {
         output.push('\n');
     }
-    if ((cycle%40)-x).abs() <= 1 {
+    if ((cycle % 40) - x).abs() <= 1 {
         output.push('#');
-    }else {
+    } else {
         output.push(' ');
     }
 }

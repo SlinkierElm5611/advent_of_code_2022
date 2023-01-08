@@ -96,26 +96,30 @@ impl Region {
     fn djistra(&self) -> Vec<Vec<usize>> {
         let mut distances: Vec<Vec<usize>> =
             vec![vec![usize::MAX; self.map[0].len()]; self.map.len()];
-        let mut unvisited: std::collections::HashSet<(usize,usize)> = std::collections::HashSet::new();
-        for j in 0..distances.len(){
+        let mut unvisited: std::collections::HashSet<(usize, usize)> =
+            std::collections::HashSet::new();
+        for j in 0..distances.len() {
             for i in 0..distances[j].len() {
-                unvisited.insert((j,i));
+                unvisited.insert((j, i));
             }
         }
-        distances[self.end_position.0][self.end_position.1] =0;
-        let mut current_node: (usize,usize);
+        distances[self.end_position.0][self.end_position.1] = 0;
+        let mut current_node: (usize, usize);
         loop {
             if unvisited.is_empty() {
                 break;
             }
             current_node = self.get_minimum_unvisited_location(&distances, &unvisited);
-            if distances[current_node.0][current_node.1] == usize::MAX{
+            if distances[current_node.0][current_node.1] == usize::MAX {
                 break;
             }
             unvisited.remove(&current_node);
             for neighbour in self.get_neighbours(current_node) {
-                if distances[neighbour.0][neighbour.1] > distances[current_node.0][current_node.1]+1 {
-                    distances[neighbour.0][neighbour.1] = distances[current_node.0][current_node.1]+1;
+                if distances[neighbour.0][neighbour.1]
+                    > distances[current_node.0][current_node.1] + 1
+                {
+                    distances[neighbour.0][neighbour.1] =
+                        distances[current_node.0][current_node.1] + 1;
                 }
             }
         }
@@ -135,10 +139,10 @@ pub fn hill_climbing_algorithm_part_two() -> usize {
     let distances = region.djistra();
     let mut current_lowest: usize = usize::MAX;
     for i in 0..distances.len() {
-        for j in 0..distances[i].len(){
-            if region.map[i][j] == 0{
-                if current_lowest > distances[i][j]{
-                    current_lowest= distances[i][j];
+        for j in 0..distances[i].len() {
+            if region.map[i][j] == 0 {
+                if current_lowest > distances[i][j] {
+                    current_lowest = distances[i][j];
                 }
             }
         }

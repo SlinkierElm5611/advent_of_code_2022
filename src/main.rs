@@ -10,7 +10,9 @@ pub mod day9;
 pub mod day10;
 pub mod day11;
 pub mod day12;
+pub mod day13;
 
 fn main() {
-    println!("{}", day12::hill_climbing_algorithm_part_one());
+    println!("{}", day13::distress_signal_part_one());
+    println!("{}", day13::distress_signal_part_two());
 }

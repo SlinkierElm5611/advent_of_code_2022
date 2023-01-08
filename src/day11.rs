@@ -7,7 +7,7 @@ struct Monkey {
     test: usize,
     test_fail: usize,
     test_pass: usize,
-    number_of_inspections: usize
+    number_of_inspections: usize,
 }
 
 pub fn monkey_in_the_middle_part_one() -> usize {
@@ -31,10 +31,28 @@ pub fn monkey_in_the_middle_part_one() -> usize {
         let mut chimp: Monkey = Monkey {
             items_held: Vec::new(),
             operation: [String::new(), String::new(), String::new()],
-            test: lines[i*6 + 3].split(" ").collect::<Vec<&str>>().pop().expect("Improperly formatted input").parse().expect("Error parsing int"),
-            test_fail: lines[i*6 + 5].split(" ").collect::<Vec<&str>>().pop().expect("Improperly formatted input").parse().expect("Error parsing int"),
-            test_pass: lines[i*6 + 4].split(" ").collect::<Vec<&str>>().pop().expect("Improperly formatted input").parse().expect("Error parsing int"),
-            number_of_inspections: 0
+            test: lines[i * 6 + 3]
+                .split(" ")
+                .collect::<Vec<&str>>()
+                .pop()
+                .expect("Improperly formatted input")
+                .parse()
+                .expect("Error parsing int"),
+            test_fail: lines[i * 6 + 5]
+                .split(" ")
+                .collect::<Vec<&str>>()
+                .pop()
+                .expect("Improperly formatted input")
+                .parse()
+                .expect("Error parsing int"),
+            test_pass: lines[i * 6 + 4]
+                .split(" ")
+                .collect::<Vec<&str>>()
+                .pop()
+                .expect("Improperly formatted input")
+                .parse()
+                .expect("Error parsing int"),
+            number_of_inspections: 0,
         };
         for item in lines[i * 6 + 1][lines[i * 6 + 1]
             .find(":")
@@ -56,37 +74,47 @@ pub fn monkey_in_the_middle_part_one() -> usize {
         monkeys.push(chimp);
     }
     for _ in 0..20 {
-        for chimp in 0..monkeys.len(){
-            while monkeys[chimp].items_held.len() > 0{
-                let mut item = monkeys[chimp].items_held.pop().expect("No items left to pop!");
-                if monkeys[chimp].operation[2] == "old"{
-                    if monkeys[chimp].operation[1] == "*"{
+        for chimp in 0..monkeys.len() {
+            while monkeys[chimp].items_held.len() > 0 {
+                let mut item = monkeys[chimp]
+                    .items_held
+                    .pop()
+                    .expect("No items left to pop!");
+                if monkeys[chimp].operation[2] == "old" {
+                    if monkeys[chimp].operation[1] == "*" {
                         item *= item;
-                    }else {
+                    } else {
                         item += item;
                     }
-                }else {
+                } else {
                     if monkeys[chimp].operation[1] == "*" {
-                        item *= monkeys[chimp].operation[2].trim().parse::<usize>().expect("Error parsing int");
-                    }else {
-                        item += monkeys[chimp].operation[2].trim().parse::<usize>().expect("Error parsing int")
+                        item *= monkeys[chimp].operation[2]
+                            .trim()
+                            .parse::<usize>()
+                            .expect("Error parsing int");
+                    } else {
+                        item += monkeys[chimp].operation[2]
+                            .trim()
+                            .parse::<usize>()
+                            .expect("Error parsing int")
                     }
                 }
-                monkeys[chimp].number_of_inspections+=1;
-                item = item/3;
+                monkeys[chimp].number_of_inspections += 1;
+                item = item / 3;
                 if item % monkeys[chimp].test == 0 {
                     let index = monkeys[chimp].test_pass;
                     monkeys[index].items_held.push(item);
-                }else {
+                } else {
                     let index = monkeys[chimp].test_fail;
-                    monkeys[index].items_held.push(item);                    
+                    monkeys[index].items_held.push(item);
                 }
             }
         }
     }
     let mut sorted_worries: Vec<usize> = monkeys.iter().map(|x| x.number_of_inspections).collect();
     sorted_worries.sort();
-    return sorted_worries.pop().expect("No items left to pop")*sorted_worries.pop().expect("No items left to pop");
+    return sorted_worries.pop().expect("No items left to pop")
+        * sorted_worries.pop().expect("No items left to pop");
 }
 
 pub fn monkey_in_the_middle_part_two() -> usize {
@@ -110,10 +138,28 @@ pub fn monkey_in_the_middle_part_two() -> usize {
         let mut chimp: Monkey = Monkey {
             items_held: Vec::new(),
             operation: [String::new(), String::new(), String::new()],
-            test: lines[i*6 + 3].split(" ").collect::<Vec<&str>>().pop().expect("Improperly formatted input").parse().expect("Error parsing int"),
-            test_fail: lines[i*6 + 5].split(" ").collect::<Vec<&str>>().pop().expect("Improperly formatted input").parse().expect("Error parsing int"),
-            test_pass: lines[i*6 + 4].split(" ").collect::<Vec<&str>>().pop().expect("Improperly formatted input").parse().expect("Error parsing int"),
-            number_of_inspections: 0
+            test: lines[i * 6 + 3]
+                .split(" ")
+                .collect::<Vec<&str>>()
+                .pop()
+                .expect("Improperly formatted input")
+                .parse()
+                .expect("Error parsing int"),
+            test_fail: lines[i * 6 + 5]
+                .split(" ")
+                .collect::<Vec<&str>>()
+                .pop()
+                .expect("Improperly formatted input")
+                .parse()
+                .expect("Error parsing int"),
+            test_pass: lines[i * 6 + 4]
+                .split(" ")
+                .collect::<Vec<&str>>()
+                .pop()
+                .expect("Improperly formatted input")
+                .parse()
+                .expect("Error parsing int"),
+            number_of_inspections: 0,
         };
         for item in lines[i * 6 + 1][lines[i * 6 + 1]
             .find(":")
@@ -135,39 +181,49 @@ pub fn monkey_in_the_middle_part_two() -> usize {
         monkeys.push(chimp);
     }
     let mut modulus: usize = 1;
-    for chimp in &monkeys{
+    for chimp in &monkeys {
         modulus *= chimp.test;
     }
     for _ in 0..10_000 {
-        for chimp in 0..monkeys.len(){
-            while monkeys[chimp].items_held.len() > 0{
-                let mut item = monkeys[chimp].items_held.pop().expect("No items left to pop!");
-                if monkeys[chimp].operation[2] == "old"{
-                    if monkeys[chimp].operation[1] == "*"{
+        for chimp in 0..monkeys.len() {
+            while monkeys[chimp].items_held.len() > 0 {
+                let mut item = monkeys[chimp]
+                    .items_held
+                    .pop()
+                    .expect("No items left to pop!");
+                if monkeys[chimp].operation[2] == "old" {
+                    if monkeys[chimp].operation[1] == "*" {
                         item *= item;
-                    }else {
+                    } else {
                         item += item;
                     }
-                }else {
+                } else {
                     if monkeys[chimp].operation[1] == "*" {
-                        item *= monkeys[chimp].operation[2].trim().parse::<usize>().expect("Error parsing int");
-                    }else {
-                        item += monkeys[chimp].operation[2].trim().parse::<usize>().expect("Error parsing int")
+                        item *= monkeys[chimp].operation[2]
+                            .trim()
+                            .parse::<usize>()
+                            .expect("Error parsing int");
+                    } else {
+                        item += monkeys[chimp].operation[2]
+                            .trim()
+                            .parse::<usize>()
+                            .expect("Error parsing int")
                     }
                 }
-                monkeys[chimp].number_of_inspections+=1;
-                item = item%modulus;
+                monkeys[chimp].number_of_inspections += 1;
+                item = item % modulus;
                 if item % monkeys[chimp].test == 0 {
                     let index = monkeys[chimp].test_pass;
                     monkeys[index].items_held.push(item);
-                }else {
+                } else {
                     let index = monkeys[chimp].test_fail;
-                    monkeys[index].items_held.push(item);                    
+                    monkeys[index].items_held.push(item);
                 }
             }
         }
     }
     let mut sorted_worries: Vec<usize> = monkeys.iter().map(|x| x.number_of_inspections).collect();
     sorted_worries.sort();
-    return sorted_worries.pop().expect("No items left to pop")*sorted_worries.pop().expect("No items left to pop");
+    return sorted_worries.pop().expect("No items left to pop")
+        * sorted_worries.pop().expect("No items left to pop");
 }

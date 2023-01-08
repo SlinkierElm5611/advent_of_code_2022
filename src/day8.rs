@@ -1,7 +1,7 @@
-use std::{io::Read};
+use std::io::Read;
 
 fn on_edge(x: usize, y: usize, tree_map: &Vec<Vec<usize>>) -> bool {
-    if x == 0 || x == &tree_map.len()-1 || y == 0 || y == &tree_map[x].len() - 1 {
+    if x == 0 || x == &tree_map.len() - 1 || y == 0 || y == &tree_map[x].len() - 1 {
         return true;
     }
     return false;
@@ -22,50 +22,50 @@ pub fn treetop_tree_house_part_one() -> usize {
         tree_heights.push(temp_vec);
     }
     let mut trees_visible_from_outside: usize = 0;
-    let mut tree_visibility: Vec<(usize, usize, [usize;4], bool)> = Vec::new();
+    let mut tree_visibility: Vec<(usize, usize, [usize; 4], bool)> = Vec::new();
     for x in 0..tree_heights.len() {
         for y in 0..tree_heights[x].len() {
             if on_edge(x, y, &tree_heights) {
                 trees_visible_from_outside += 1;
-            }else {
-                let mut tree: (usize, usize, [usize;4], bool) = (x,y,[0;4], false);
-                for i in 1..tree.0+1 {
-                    let index: usize = x-i;
-                    if tree_heights[index][y] >= tree_heights[x][y]{
+            } else {
+                let mut tree: (usize, usize, [usize; 4], bool) = (x, y, [0; 4], false);
+                for i in 1..tree.0 + 1 {
+                    let index: usize = x - i;
+                    if tree_heights[index][y] >= tree_heights[x][y] {
                         tree.2[0] = i;
                         break;
                     }
-                    if on_edge(index, y, &tree_heights){
+                    if on_edge(index, y, &tree_heights) {
                         tree.3 = true;
                     }
                 }
-                for i in 1..tree_heights.len()-tree.0{
-                    let index: usize = x+i;
-                    if tree_heights[index][y] >= tree_heights[x][y]{
+                for i in 1..tree_heights.len() - tree.0 {
+                    let index: usize = x + i;
+                    if tree_heights[index][y] >= tree_heights[x][y] {
                         tree.2[1] = i;
                         break;
                     }
-                    if on_edge(index, y, &tree_heights){
+                    if on_edge(index, y, &tree_heights) {
                         tree.3 = true;
                     }
                 }
-                for j in 1..tree.1+1 {
-                    let index: usize = y-j;
-                    if tree_heights[x][index] >= tree_heights[x][y]{
+                for j in 1..tree.1 + 1 {
+                    let index: usize = y - j;
+                    if tree_heights[x][index] >= tree_heights[x][y] {
                         tree.2[2] = j;
                         break;
                     }
-                    if on_edge(x, index, &tree_heights){
+                    if on_edge(x, index, &tree_heights) {
                         tree.3 = true;
                     }
                 }
-                for j in 1..tree_heights[x].len()-tree.1{
-                    let index: usize = y+j;
-                    if tree_heights[x][index] >= tree_heights[x][y]{
+                for j in 1..tree_heights[x].len() - tree.1 {
+                    let index: usize = y + j;
+                    if tree_heights[x][index] >= tree_heights[x][y] {
                         tree.2[3] = j;
                         break;
                     }
-                    if on_edge(x, index, &tree_heights){
+                    if on_edge(x, index, &tree_heights) {
                         tree.3 = true;
                     }
                 }
@@ -95,53 +95,53 @@ pub fn treetop_tree_house_part_two() -> usize {
         tree_heights.push(temp_vec);
     }
     let mut _trees_visible_from_outside: usize = 0;
-    let mut tree_visibility: Vec<(usize, usize, [usize;4], bool)> = Vec::new();
+    let mut tree_visibility: Vec<(usize, usize, [usize; 4], bool)> = Vec::new();
     for x in 0..tree_heights.len() {
         for y in 0..tree_heights[x].len() {
             if on_edge(x, y, &tree_heights) {
                 _trees_visible_from_outside += 1;
-            }else {
-                let mut tree: (usize, usize, [usize;4], bool) = (x,y,[0;4], false);
-                for i in 1..tree.0+1 {
-                    let index: usize = x-i;
-                    if tree_heights[index][y] >= tree_heights[x][y]{
+            } else {
+                let mut tree: (usize, usize, [usize; 4], bool) = (x, y, [0; 4], false);
+                for i in 1..tree.0 + 1 {
+                    let index: usize = x - i;
+                    if tree_heights[index][y] >= tree_heights[x][y] {
                         tree.2[0] = i;
                         break;
                     }
-                    if on_edge(index, y, &tree_heights){
+                    if on_edge(index, y, &tree_heights) {
                         tree.2[0] = i;
                         tree.3 = true;
                     }
                 }
-                for i in 1..tree_heights.len()-tree.0{
-                    let index: usize = x+i;
-                    if tree_heights[index][y] >= tree_heights[x][y]{
+                for i in 1..tree_heights.len() - tree.0 {
+                    let index: usize = x + i;
+                    if tree_heights[index][y] >= tree_heights[x][y] {
                         tree.2[1] = i;
                         break;
                     }
-                    if on_edge(index, y, &tree_heights){
+                    if on_edge(index, y, &tree_heights) {
                         tree.2[1] = i;
                         tree.3 = true;
                     }
                 }
-                for j in 1..tree.1+1 {
-                    let index: usize = y-j;
-                    if tree_heights[x][index] >= tree_heights[x][y]{
+                for j in 1..tree.1 + 1 {
+                    let index: usize = y - j;
+                    if tree_heights[x][index] >= tree_heights[x][y] {
                         tree.2[2] = j;
                         break;
                     }
-                    if on_edge(x, index, &tree_heights){
+                    if on_edge(x, index, &tree_heights) {
                         tree.2[2] = j;
                         tree.3 = true;
                     }
                 }
-                for j in 1..tree_heights[x].len()-tree.1{
-                    let index: usize = y+j;
-                    if tree_heights[x][index] >= tree_heights[x][y]{
+                for j in 1..tree_heights[x].len() - tree.1 {
+                    let index: usize = y + j;
+                    if tree_heights[x][index] >= tree_heights[x][y] {
                         tree.2[3] = j;
                         break;
                     }
-                    if on_edge(x, index, &tree_heights){
+                    if on_edge(x, index, &tree_heights) {
                         tree.2[3] = j;
                         tree.3 = true;
                     }
@@ -154,9 +154,9 @@ pub fn treetop_tree_house_part_two() -> usize {
         }
     }
     let mut current_highest_scenic_score: usize = 0;
-    for tree in tree_visibility{
+    for tree in tree_visibility {
         let mut scenic_score: usize = 1;
-        for distance in tree.2{
+        for distance in tree.2 {
             scenic_score *= distance;
         }
         if scenic_score > current_highest_scenic_score {

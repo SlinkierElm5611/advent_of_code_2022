@@ -36,12 +36,12 @@ pub fn supply_stacks_part_one() -> String {
             counter += 4;
         }
     }
-    for i in 0..stacks.len(){
+    for i in 0..stacks.len() {
         stacks[i].reverse();
     }
     for i in ((index + 1) as usize)..input.len() {
         let instruction: Vec<&str> = input[i].split(" ").collect();
-        for _ in 0..instruction[1].parse::<usize>().unwrap(){
+        for _ in 0..instruction[1].parse::<usize>().unwrap() {
             let source: usize = instruction[3].parse::<usize>().unwrap() - 1;
             let destination: usize = instruction[5].parse::<usize>().unwrap() - 1;
             let item: char = stacks[source].pop().unwrap();
@@ -49,8 +49,8 @@ pub fn supply_stacks_part_one() -> String {
         }
     }
     let mut output_string: String = String::new();
-    for stack in stacks{
-        output_string.push(stack[stack.len()-1]);
+    for stack in stacks {
+        output_string.push(stack[stack.len() - 1]);
     }
     return output_string;
 }
@@ -91,7 +91,7 @@ pub fn supply_stacks_part_two() -> String {
             counter += 4;
         }
     }
-    for i in 0..stacks.len(){
+    for i in 0..stacks.len() {
         stacks[i].reverse();
     }
     for i in ((index + 1) as usize)..input.len() {
@@ -99,7 +99,7 @@ pub fn supply_stacks_part_two() -> String {
         let source: usize = instruction[3].parse::<usize>().unwrap() - 1;
         let destination: usize = instruction[5].parse::<usize>().unwrap() - 1;
         let mut picked_up: Vec<char> = Vec::new();
-        for _ in 0..instruction[1].parse::<usize>().unwrap(){
+        for _ in 0..instruction[1].parse::<usize>().unwrap() {
             let item: char = stacks[source].pop().unwrap();
             picked_up.push(item);
         }
@@ -107,8 +107,8 @@ pub fn supply_stacks_part_two() -> String {
         stacks[destination].extend(picked_up.iter());
     }
     let mut output_string: String = String::new();
-    for stack in stacks{
-        output_string.push(stack[stack.len()-1]);
+    for stack in stacks {
+        output_string.push(stack[stack.len() - 1]);
     }
     return output_string;
 }
