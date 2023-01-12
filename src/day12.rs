@@ -1,5 +1,3 @@
-use std::collections::hash_set::Iter;
-
 #[derive(Debug)]
 struct Region {
     start_position: (usize, usize),
@@ -80,7 +78,7 @@ impl Region {
         dist: &Vec<Vec<usize>>,
         unvisited: &std::collections::HashSet<(usize, usize)>,
     ) -> (usize, usize) {
-        let mut location_iterator: Iter<(usize, usize)> = unvisited.iter();
+        let mut location_iterator: std::collections::hash_set::Iter<(usize, usize)> = unvisited.iter();
         let mut current_lowwest: &(usize, usize) = location_iterator
             .next()
             .expect("No items left in iterator!");

@@ -11,8 +11,9 @@ pub mod day10;
 pub mod day11;
 pub mod day12;
 pub mod day13;
+pub mod day14;
 
 fn main() {
-    println!("{}", day13::distress_signal_part_one());
-    println!("{}", day13::distress_signal_part_two());
+    println!("{}", day14::rigolith_reservoir_part_one());
+    println!("{}", day14::rigolith_reservoir_part_two());
 }
