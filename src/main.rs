@@ -16,5 +16,5 @@ pub mod day15;
 pub mod day16;
 
 fn main() {
-    println!("{}", day16::proboscidea_volcanium_part_one());
+    println!("{}", day16::proboscidea_volcanium_part_two());
 }
