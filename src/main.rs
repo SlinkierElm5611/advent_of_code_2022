@@ -14,7 +14,8 @@ pub mod day13;
 pub mod day14;
 pub mod day15;
 pub mod day16;
+pub mod day17;
 
 fn main() {
-    println!("{}", day16::proboscidea_volcanium_part_two());
+    println!("{}", day17::pyroclastic_flow_part_one());
 }
