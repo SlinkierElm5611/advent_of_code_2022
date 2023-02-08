@@ -1,3 +1,4 @@
+#[derive(Debug)]
 struct Rock {
     positions: Vec<(u16, u16)>,
     rock_type: u8,
@@ -58,7 +59,28 @@ impl Rock {
         }
     }
 }
-struct Cave {}
+#[derive(Debug)]
+struct Cave {
+    highest_occupied_position: u16,
+    spawned_rocks: Vec<Rock>,
+    currents: Vec<bool>
+}
+impl Cave {
+    fn parse(input: &str) -> Cave {
+        let mut new_cave: Cave = Cave { highest_occupied_position: 0, spawned_rocks: Vec::new(), currents: Vec::new() };
+        for char in input.chars() {
+            new_cave.currents.push(char=='>');
+        }
+        return new_cave;
+    }
+    fn spawn_rock(&mut self){
+    }
+}
 pub fn pyroclastic_flow_part_one() -> u16 {
-    return 0;
+    let input: &str = &std::fs::read_to_string("day17.txt").expect("Error reading from file!");
+    let mut new_cave: Cave = Cave::parse(input);
+    for _ in 0..2022{
+        new_cave.spawn_rock();
+    }
+    return new_cave.highest_occupied_position;
 }
