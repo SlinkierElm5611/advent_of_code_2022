@@ -61,7 +61,33 @@ impl Rock {
     }
 }
 #[derive(Debug)]
-struct Cave {}
+struct Cave {
+    rocks: [Position; 5*2022],
+    last_index: usize,
+    current_rock_type: u8,
+    current_highest: u16,
+}
+impl Cave {
+    fn build() -> Cave {
+        return Cave {
+            rocks:  [Position {
+                x: u16::MAX,
+                y: u16::MAX,
+            }; 5*2022],
+            last_index: usize::MIN,
+            current_rock_type: u8::MIN,
+            current_highest: u16::MIN,
+        }
+    }
+    fn simulate_rock(&mut self) -> None {
+        let new_rock: Rock = Rock::build(self.current_rock_type, self.last_index as u16);
+    }
+    fn run_simulation(&mut self) -> None {
+        for i in 0..2022{
+            self.simulate_rock();
+        }
+    }
+}
 pub fn pyroclastic_flow_part_one() -> u16 {
     let input: &str = &std::fs::read_to_string("day17.txt").expect("Error reading from file!");
     for i in 0..5 {
