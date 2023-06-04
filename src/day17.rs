@@ -11,7 +11,7 @@ struct Position {
 }
 impl Position {
     fn is_valid(&self) -> bool {
-        return self.x < 8 && self.x != 0 && self.y != 0;
+        return self.x < 8 && self.x != u16::MIN && self.y != u16::MIN;
     }
 }
 #[derive(Debug)]
@@ -90,12 +90,12 @@ struct Cave {
 }
 impl Cave {
     fn parse_input(air_currents_input: &str) -> Vec<Direction> {
-        let mut air_currents: Vec<Direction> = vec![Direction::Down; air_currents_input.len()];
-        for (index, char) in air_currents_input.chars().enumerate() {
+        let mut air_currents: Vec<Direction> = Vec::new();
+        for char in air_currents_input.chars() {
             if char == '>' {
-                air_currents[index] = Direction::Right;
-            } else {
-                air_currents[index] = Direction::Left;
+                air_currents.push(Direction::Right);
+            } else if char == '<' {
+                air_currents.push(Direction::Left);
             }
         }
         return air_currents;
@@ -216,7 +216,6 @@ impl Cave {
 }
 pub fn pyroclastic_flow_part_one() -> u16 {
     let input: &str = &std::fs::read_to_string("day17.txt").expect("Error! Unable to read file");
-    dbg!(input.len());
     let mut cave: Cave = Cave::build(input);
     cave.run_simulation();
     return cave.current_highest;
