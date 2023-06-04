@@ -4,7 +4,7 @@ enum Direction {
     Left,
     Right,
 }
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct Position {
     x: u16,
     y: u16,
@@ -102,10 +102,10 @@ impl Cave {
     }
     fn build(air_currents_input: &str) -> Cave {
         let parsed_air_currents: Vec<Direction> = Cave::parse_input(air_currents_input);
-        let mut new_cave = Cave {
+        let new_cave = Cave {
             rocks: [Position {
-                x: u16::MAX,
-                y: u16::MAX,
+                x: u16::MIN,
+                y: u16::MIN,
             }; 8897],
             last_index: usize::MIN,
             current_rock_type: u8::MIN,
@@ -115,40 +115,91 @@ impl Cave {
         };
         return new_cave;
     }
-    fn move_rock(&self, rock: &mut Rock, direction: Direction) -> bool{
-        let new_location : [Position; 5] = [Position {x: u16::MIN, y: u16::MIN}; 5];
+    fn set_current_highest(&mut self) {
+        let mut current_highest: u16 = u16::MIN;
+        for i in 0..8897 {
+            if self.rocks[i].is_valid() && self.rocks[i].y > current_highest {
+                current_highest = self.rocks[i].y;
+            }
+        }
+        self.current_highest = current_highest;
+    }
+    fn is_position_taken(&self, position_to_check: &Position) -> bool {
+        for i in 0..8897 {
+            if position_to_check == &self.rocks[i] {
+                return true;
+            }
+        }
+        return false;
+    }
+    fn move_rock(&self, rock: &mut Rock, direction: &Direction) -> bool {
+        let mut new_location: [Position; 5] = [Position {
+            x: u16::MIN,
+            y: u16::MIN,
+        }; 5];
+        let mut is_move_allowed: bool = true;
         match direction {
             Direction::Down => {
                 for i in 0..5 {
                     if rock.occupied_locations[i].is_valid() {
-                        //TODO: Implement logic to check if rock can move down
+                        new_location[i] = Position {
+                            x: rock.occupied_locations[i].x,
+                            y: rock.occupied_locations[i].y - 1,
+                        };
                     }
                 }
             }
             Direction::Left => {
                 for i in 0..5 {
                     if rock.occupied_locations[i].is_valid() {
-                        //TODO: Implement logic to check if rock can move left
+                        new_location[i] = Position {
+                            x: rock.occupied_locations[i].x - 1,
+                            y: rock.occupied_locations[i].y,
+                        };
                     }
                 }
             }
             Direction::Right => {
                 for i in 0..5 {
                     if rock.occupied_locations[i].is_valid() {
-                        //TODO: Implement logic to check if rock can move right
+                        new_location[i] = Position {
+                            x: rock.occupied_locations[i].x + 1,
+                            y: rock.occupied_locations[i].y,
+                        };
                     }
                 }
             }
         }
-        return false;
+        for i in 0..5 {
+            if !self.is_position_taken(&new_location[i]) && new_location[i].is_valid() {
+                is_move_allowed = false;
+            }
+        }
+        if is_move_allowed {
+            for i in 0..5 {
+                rock.occupied_locations[i] = new_location[i];
+            }
+        }
+        return is_move_allowed;
     }
     fn simulate_rock(&mut self) {
-        let mut new_rock: Rock = Rock::build(self.current_rock_type, self.last_index as u16);
+        let mut new_rock: Rock = Rock::build(self.current_rock_type, self.current_highest);
+        loop {
+            self.move_rock(&mut new_rock, &self.air_currents[self.current_index]);
+            self.current_index += 1;
+            if self.current_index == self.air_currents.len() {
+                self.current_index = 0;
+            }
+            if !self.move_rock(&mut new_rock, &Direction::Down) {
+                break;
+            }
+        }
         for i in 0..5 {
-            if new_rock.occupied_locations[i].y != u16::MIN {
+            if new_rock.occupied_locations[i].is_valid() {
                 self.rocks[self.last_index + i] = new_rock.occupied_locations[i];
             }
         }
+        self.set_current_highest();
         self.last_index += new_rock.lenght as usize;
         self.current_rock_type += 1;
         if self.current_rock_type == 5 {
