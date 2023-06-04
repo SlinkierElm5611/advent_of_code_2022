@@ -11,7 +11,7 @@ struct Position {
 }
 impl Position {
     fn is_valid(&self) -> bool {
-        return self.x != u16::MIN && self.y != u16::MIN;
+        return self.x < 8 && self.x != 0 && self.y != 0;
     }
 }
 #[derive(Debug)]
@@ -52,24 +52,24 @@ impl Rock {
                     new_rock.occupied_locations[i].x = 3 + (i as u16);
                     new_rock.occupied_locations[i].y = current_max + 4;
                 }
-                new_rock.occupied_locations[3].x = 4;
+                new_rock.occupied_locations[3].x = 5;
                 new_rock.occupied_locations[3].y = current_max + 5;
-                new_rock.occupied_locations[4].x = 4;
+                new_rock.occupied_locations[4].x = 5;
                 new_rock.occupied_locations[4].y = current_max + 6;
                 new_rock.lenght = 5;
             }
             3 => {
                 for i in 0..4 {
-                    new_rock.occupied_locations[i].x = 2;
-                    new_rock.occupied_locations[i].y = current_max + 3 + (i as u16);
+                    new_rock.occupied_locations[i].x = 3;
+                    new_rock.occupied_locations[i].y = current_max + 4 + (i as u16);
                 }
                 new_rock.lenght = 4;
             }
             4 => {
                 for i in 0..2 {
                     for j in 0..2 {
-                        new_rock.occupied_locations[(i * 2) + j].x = 2 + (i as u16);
-                        new_rock.occupied_locations[(i * 2) + j].y = current_max + 3 + (j as u16);
+                        new_rock.occupied_locations[(i * 2) + j].x = 3 + (i as u16);
+                        new_rock.occupied_locations[(i * 2) + j].y = current_max + 4 + (j as u16);
                     }
                 }
                 new_rock.lenght = 4;
@@ -171,7 +171,9 @@ impl Cave {
             }
         }
         for i in 0..5 {
-            if !self.is_position_taken(&new_location[i]) && new_location[i].is_valid() {
+            if (!new_location[i].is_valid() || self.is_position_taken(&new_location[i]))
+                && i < rock.lenght as usize
+            {
                 is_move_allowed = false;
             }
         }
@@ -214,8 +216,8 @@ impl Cave {
 }
 pub fn pyroclastic_flow_part_one() -> u16 {
     let input: &str = &std::fs::read_to_string("day17.txt").expect("Error! Unable to read file");
+    dbg!(input.len());
     let mut cave: Cave = Cave::build(input);
-    dbg!(&cave);
     cave.run_simulation();
     return cave.current_highest;
 }
