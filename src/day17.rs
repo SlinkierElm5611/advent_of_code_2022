@@ -6,12 +6,12 @@ enum Direction {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct Position {
-    x: u16,
-    y: u16,
+    x: usize,
+    y: usize,
 }
 impl Position {
     fn is_valid(&self) -> bool {
-        return self.x < 8 && self.x != u16::MIN && self.y != u16::MIN;
+        return self.x < 8 && self.x != usize::MIN && self.y != usize::MIN;
     }
 }
 #[derive(Debug)]
@@ -20,25 +20,25 @@ struct Rock {
     lenght: u8,
 }
 impl Rock {
-    fn build(rock_type: u8, current_max: u16) -> Rock {
+    fn build(rock_type: u8, current_max: usize) -> Rock {
         let mut new_rock: Rock = Rock {
             occupied_locations: [Position {
-                x: u16::MIN,
-                y: u16::MIN,
+                x: usize::MIN,
+                y: usize::MIN,
             }; 5],
             lenght: u8::MIN,
         };
         match rock_type {
             0 => {
                 for i in 0..4 {
-                    new_rock.occupied_locations[i].x = 3 + (i as u16);
+                    new_rock.occupied_locations[i].x = 3 + i;
                     new_rock.occupied_locations[i].y = current_max + 4;
                 }
                 new_rock.lenght = 4;
             }
             1 => {
                 for i in 0..3 {
-                    new_rock.occupied_locations[i].x = 3 + (i as u16);
+                    new_rock.occupied_locations[i].x = 3 + i;
                     new_rock.occupied_locations[i].y = current_max + 5;
                 }
                 new_rock.occupied_locations[3].x = 4;
@@ -49,7 +49,7 @@ impl Rock {
             }
             2 => {
                 for i in 0..3 {
-                    new_rock.occupied_locations[i].x = 3 + (i as u16);
+                    new_rock.occupied_locations[i].x = 3 + i;
                     new_rock.occupied_locations[i].y = current_max + 4;
                 }
                 new_rock.occupied_locations[3].x = 5;
@@ -61,15 +61,15 @@ impl Rock {
             3 => {
                 for i in 0..4 {
                     new_rock.occupied_locations[i].x = 3;
-                    new_rock.occupied_locations[i].y = current_max + 4 + (i as u16);
+                    new_rock.occupied_locations[i].y = current_max + 4 + i;
                 }
                 new_rock.lenght = 4;
             }
             4 => {
                 for i in 0..2 {
                     for j in 0..2 {
-                        new_rock.occupied_locations[(i * 2) + j].x = 3 + (i as u16);
-                        new_rock.occupied_locations[(i * 2) + j].y = current_max + 4 + (j as u16);
+                        new_rock.occupied_locations[(i * 2) + j].x = 3 + i;
+                        new_rock.occupied_locations[(i * 2) + j].y = current_max + 4 + j;
                     }
                 }
                 new_rock.lenght = 4;
@@ -84,7 +84,7 @@ struct Cave {
     rocks: [Position; 8897],
     last_index: usize,
     current_rock_type: u8,
-    current_highest: u16,
+    current_highest: usize,
     air_currents: Vec<Direction>,
     current_index: usize,
 }
@@ -104,19 +104,19 @@ impl Cave {
         let parsed_air_currents: Vec<Direction> = Cave::parse_input(air_currents_input);
         let new_cave = Cave {
             rocks: [Position {
-                x: u16::MIN,
-                y: u16::MIN,
+                x: usize::MIN,
+                y: usize::MIN,
             }; 8897],
             last_index: usize::MIN,
             current_rock_type: u8::MIN,
-            current_highest: u16::MIN,
+            current_highest: usize::MIN,
             air_currents: parsed_air_currents,
             current_index: usize::MIN,
         };
         return new_cave;
     }
     fn set_current_highest(&mut self) {
-        let mut current_highest: u16 = u16::MIN;
+        let mut current_highest: usize = usize::MIN;
         for i in 0..8897 {
             if self.rocks[i].is_valid() && self.rocks[i].y > current_highest {
                 current_highest = self.rocks[i].y;
@@ -134,8 +134,8 @@ impl Cave {
     }
     fn move_rock(&self, rock: &mut Rock, direction: &Direction) -> bool {
         let mut new_location: [Position; 5] = [Position {
-            x: u16::MIN,
-            y: u16::MIN,
+            x: usize::MIN,
+            y: usize::MIN,
         }; 5];
         let mut is_move_allowed: bool = true;
         match direction {
@@ -214,9 +214,13 @@ impl Cave {
         }
     }
 }
-pub fn pyroclastic_flow_part_one() -> u16 {
+pub fn pyroclastic_flow_part_one() -> usize {
     let input: &str = &std::fs::read_to_string("day17.txt").expect("Error! Unable to read file");
     let mut cave: Cave = Cave::build(input);
     cave.run_simulation();
     return cave.current_highest;
+}
+
+pub fn pyroclastic_flow_part_two() -> usize {
+    return usize::MIN;
 }
